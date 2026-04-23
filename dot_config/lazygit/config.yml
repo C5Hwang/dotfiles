@@ -1,0 +1,30 @@
+gui:
+  nerdFontsVersion: "3"
+  showFileTree: true
+  sidePanelWidth: 0.25
+  mainPanelSplitMode: flexible
+  wrapLinesInStagingView: true
+  useHunkModeInStagingView: true
+  showCommandLog: false
+  showBottomLine: true
+  showPanelJumps: true
+
+git:
+  autoFetch: true
+  autoRefresh: true
+  autoForwardBranches: onlyMainBranches
+  fetchAll: true
+  autoStageResolvedConflicts: true
+  diffContextSize: 3
+  pagers:
+    - pager: >-
+        delta --paging=never --side-by-side --line-numbers
+        --hyperlinks
+        --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+      colorArg: always
+
+os:
+  editPreset: zed
+
+disableStartupPopups: true
+confirmOnQuit: true

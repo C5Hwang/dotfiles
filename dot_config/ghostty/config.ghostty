@@ -1,0 +1,75 @@
+# =========================================================
+# 1) Appearance
+# =========================================================
+
+# Theme
+theme = Xcode Dark hc
+
+# Background opacity
+background-opacity = 0.9
+
+# Background blur
+background-blur-radius = 20
+
+# =========================================================
+# 2) Font
+# =========================================================
+
+# Font size
+font-size = 17
+
+# Font family set to JetBrainsMono Nerd Font Mono
+font-family = "JetBrainsMono Nerd Font Mono"
+
+# CJK (Chinese) font fallback
+#   You must install this font first:
+#   - brew install --cask font-sarasa-gothic
+font-family = "Sarasa Term SC"
+
+# Enable ligatures
+font-feature = calt
+
+# =========================================================
+# 3) Quick Terminal
+# =========================================================
+
+# Quick terminal positioned at top
+quick-terminal-position = top
+
+# Set dropdown height
+quick-terminal-size = 40%
+
+# Auto-hide when losing focus
+quick-terminal-autohide = true
+
+# Ctrl+` to toggle quick terminal
+keybind = ctrl+backquote=toggle_quick_terminal
+
+# =========================================================
+# 4) Key Mappings
+# =========================================================
+
+# Fix Shift+Enter
+#   https://github.com/anthropics/claude-code/issues/1282
+keybind = shift+enter=text:\x1b\r
+
+# Fix Ctrl+Enter
+#   https://github.com/ghostty-org/ghostty/discussions/3151
+#   Unlike other terminals, Ghostty encodes modified key presses using the CSI u (fixterms) protocol by default. Many applications don't know how to interpret these sequences and so will print them to the console instead (they should probably just be ignoring them, but alas).
+keybind = ctrl+enter=text:\x0d
+
+# Use Option key as Alt to avoid outputting special characters
+macos-option-as-alt = true
+
+# =========================================================
+# 5) SSH
+# =========================================================
+
+# Enable SSH environment compatibility
+shell-integration-features = ssh-terminfo,ssh-env
+
+# =========================================================
+# 6) Others
+# =========================================================
+
+shell-integration = detect

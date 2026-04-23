@@ -1,0 +1,135 @@
+[
+  // === bindings ===
+  {
+    "context": "Editor && VimControl && !menu",
+    "bindings": {
+      // Basic
+      "shift-s": "workspace::Save",
+      ";": ["workspace::SendKeystrokes", ":"],
+      "o": ["workspace::SendKeystrokes", "o escape"],
+
+      // Cursor
+      "ctrl-j": ["workspace::SendKeystrokes", "5 j"],
+      "ctrl-l": ["workspace::SendKeystrokes", "5 l"],
+      "ctrl-h": ["workspace::SendKeystrokes", "5 h"],
+      "ctrl-k": ["workspace::SendKeystrokes", "5 k"],
+
+      // Edit
+      "space enter": "buffer_search::Dismiss",
+      "ctrl-shift-k": "editor::MoveLineUp",
+      "ctrl-shift-j": "editor::MoveLineDown",
+
+      // Yank
+      "shift-y": ["workspace::SendKeystrokes", "\" + y"],
+
+      // Paste
+      "shift-p": ["workspace::SendKeystrokes", "\" + p"],
+
+      // Delete
+      "space d": ["workspace::SendKeystrokes", "\" _ d"],
+
+      // Windows
+      "space h": "workspace::ActivatePaneLeft",
+      "space j": "workspace::ActivatePaneDown",
+      "space k": "workspace::ActivatePaneUp",
+      "space l": "workspace::ActivatePaneRight",
+      "s h": "pane::SplitLeft",
+      "s j": "pane::SplitDown",
+      "s k": "pane::SplitUp",
+      "s l": "pane::SplitRight",
+      "space o": "pane::JoinAll",
+
+      // LazyGit
+      "space g g": [
+        "task::Spawn",
+        {
+          "task_name": "start lazygit",
+          "reveal_target": "center",
+        },
+      ],
+    },
+  },
+  {
+    "context": "Editor || Terminal || Pane",
+    "bindings": {
+      "alt-cmd-h": "pane::ActivatePreviousItem",
+      "alt-cmd-l": "pane::ActivateNextItem",
+    },
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "ctrl-j": ["workspace::SendKeystrokes", "5 j"],
+      "ctrl-k": ["workspace::SendKeystrokes", "5 k"],
+      "a": "project_panel::NewFile",
+      "A": "project_panel::NewDirectory",
+      "r": "project_panel::Rename",
+      "d": "project_panel::Delete",
+      "shift-t": "workspace::OpenInTerminal",
+    },
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "alt-shift-f": "editor::Format",
+      "cmd-shift-enter": "agent::AddSelectionToThread",
+    },
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-;": "agent::ToggleFocus",
+    },
+  },
+  {
+    "context": "Workspace && !Terminal",
+    "bindings": {
+      "space g c": [
+        "task::Spawn",
+        {
+          "task_name": "Agent: Claude Code",
+          "reveal_target": "center",
+        },
+      ],
+      "space g x": [
+        "task::Spawn",
+        {
+          "task_name": "Agent: Codex",
+          "reveal_target": "center",
+        },
+      ],
+      "space g o": [
+        "task::Spawn",
+        {
+          "task_name": "Agent: OpenCode",
+          "reveal_target": "center",
+        },
+      ],
+    },
+  },
+
+  // === unbind ===
+  {
+    "unbind": {
+      "alt-cmd-h": "zed::HideOthers",
+    },
+  },
+  {
+    "context": "Workspace",
+    "unbind": {
+      "cmd-?": "agent::ToggleFocus",
+    },
+  },
+  {
+    "context": "Editor",
+    "unbind": {
+      "cmd-;": "editor::ToggleLineNumbers",
+    },
+  },
+  {
+    "context": "Editor && mode == full",
+    "unbind": {
+      "cmd-shift-enter": "editor::NewlineAbove",
+    },
+  },
+]

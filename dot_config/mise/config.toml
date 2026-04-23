@@ -1,0 +1,38 @@
+[tools]
+# Core Programming Languages & Runtimes
+go = "latest"
+uv = "latest"
+node = "latest"
+rust = "stable"
+python = "3.14"
+
+# Build Systems
+cmake = "latest"
+ninja = "latest"
+
+# Text Editor
+neovim = "latest"
+
+# Terminal Multiplexer
+tmux = "latest"
+
+# Modern Unix
+fzf = "latest"
+eza = "latest"
+bat = "latest"
+yazi = "latest"
+zoxide = "latest"
+bottom = "latest"
+ripgrep = "latest"
+dust = "latest"
+duf = "latest"
+
+# Git
+delta = "latest"
+lazygit = "latest"
+
+# Data Processing
+jq = "latest"
+
+# AI Tools
+"npm:@openai/codex" = "latest"

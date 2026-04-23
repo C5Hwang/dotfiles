@@ -1,0 +1,46 @@
+[user]
+    name = CSHwang
+    email = c5hwang@outlook.com
+
+[init]
+    defaultBranch = main
+
+[pull]
+    rebase = true
+    autoStash = true
+
+[fetch]
+    prune = true
+    pruneTags = true
+
+[push]
+    default = simple
+    autoSetupRemote = true
+    followTags = true
+
+[merge]
+    conflictStyle = zdiff3
+
+[interactive]
+    singleKey = true
+
+[commit]
+    verbose = true
+
+[diff]
+    algorithm = histogram
+    colorMoved = default
+    tool = zed
+
+[difftool "zed"]
+    cmd = zed --diff "$LOCAL" "$REMOTE"
+
+[core]
+    pager = delta
+
+[delta]
+    line-numbers = true
+    hyperlinks = true
+
+[include]
+    path = ~/.config/git/config.local
