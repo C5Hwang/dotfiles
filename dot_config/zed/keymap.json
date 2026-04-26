@@ -38,15 +38,6 @@
       "s k": "pane::SplitUp",
       "s l": "pane::SplitRight",
       "space o": "pane::JoinAll",
-
-      // LazyGit
-      "space g g": [
-        "task::Spawn",
-        {
-          "task_name": "start lazygit",
-          "reveal_target": "center",
-        },
-      ],
     },
   },
   {
@@ -79,11 +70,22 @@
     "context": "Workspace",
     "bindings": {
       "cmd-;": "agent::ToggleFocus",
+      "ctrl-~": "workspace::NewCenterTerminal",
     },
   },
   {
     "context": "Workspace && !Terminal",
     "bindings": {
+      // LazyGit
+      "space g g": [
+        "task::Spawn",
+        {
+          "task_name": "start lazygit",
+          "reveal_target": "center",
+        },
+      ],
+
+      // Claude Code
       "space g c": [
         "task::Spawn",
         {
@@ -91,6 +93,8 @@
           "reveal_target": "center",
         },
       ],
+
+      // Codex
       "space g x": [
         "task::Spawn",
         {
@@ -98,6 +102,8 @@
           "reveal_target": "center",
         },
       ],
+
+      // OpenCode
       "space g o": [
         "task::Spawn",
         {
@@ -130,6 +136,12 @@
     "context": "Editor && mode == full",
     "unbind": {
       "cmd-shift-enter": "editor::NewlineAbove",
+    },
+  },
+  {
+    "context": "Workspace",
+    "unbind": {
+      "ctrl-~": "workspace::NewTerminal",
     },
   },
 ]

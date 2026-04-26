@@ -1,5 +1,17 @@
 # =========================================================
-# 1) Appearance
+# 1) System
+# =========================================================
+
+# Enable notification
+desktop-notifications = true
+
+# Enable SSH environment compatibility
+shell-integration-features = ssh-terminfo,ssh-env
+
+shell-integration = detect
+
+# =========================================================
+# 2) Appearance
 # =========================================================
 
 # Theme
@@ -12,7 +24,7 @@ background-opacity = 0.9
 background-blur-radius = 20
 
 # =========================================================
-# 2) Font
+# 3) Font
 # =========================================================
 
 # Font size
@@ -30,7 +42,7 @@ font-family = "Sarasa Term SC"
 font-feature = calt
 
 # =========================================================
-# 3) Quick Terminal
+# 4) Quick Terminal
 # =========================================================
 
 # Quick terminal positioned at top
@@ -46,7 +58,7 @@ quick-terminal-autohide = true
 keybind = ctrl+backquote=toggle_quick_terminal
 
 # =========================================================
-# 4) Key Mappings
+# 5) Key Mappings
 # =========================================================
 
 # Fix Shift+Enter
@@ -60,16 +72,3 @@ keybind = ctrl+enter=text:\x0d
 
 # Use Option key as Alt to avoid outputting special characters
 macos-option-as-alt = true
-
-# =========================================================
-# 5) SSH
-# =========================================================
-
-# Enable SSH environment compatibility
-shell-integration-features = ssh-terminfo,ssh-env
-
-# =========================================================
-# 6) Others
-# =========================================================
-
-shell-integration = detect

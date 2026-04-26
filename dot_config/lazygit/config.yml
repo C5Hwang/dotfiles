@@ -23,6 +23,12 @@ git:
         --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
       colorArg: always
 
+customCommands:
+  - key: "f"
+    command: "git difftool -y {{.SelectedLocalCommit.Sha}} -- {{.SelectedCommitFile.Name}}"
+    context: "commitFiles"
+    description: "Compare selected commit file with working copy"
+
 os:
   editPreset: zed
 
