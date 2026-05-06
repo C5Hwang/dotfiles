@@ -1,28 +1,23 @@
+-- ======== UI Plugins ========
 return {
-  {
-    "catppuccin",
-    opts = {
-      flavour = "mocha",
-      integrations = {
-        blink_cmp = true,
-        bufferline = true,
-        gitsigns = true,
-        mason = true,
-        mini = { enabled = true },
-        noice = true,
-        notify = true,
-        snacks = true,
-        treesitter = true,
-        trouble = true,
-        which_key = true,
-        lsp_trouble = true,
-      },
+    -- Theme
+    {
+        "catppuccin/nvim",
+        name = "catppuccin",
+        priority = 1000,
+        opts = {
+            flavour = "mocha",
+            integrations = {
+                blink_cmp = true,
+                mason = true,
+                mini = { enabled = true },
+                native_lsp = { enabled = true },
+                treesitter = true,
+            },
+        },
+        config = function(_, opts)
+            require("catppuccin").setup(opts)
+            vim.cmd.colorscheme("catppuccin")
+        end,
     },
-  },
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "catppuccin",
-    },
-  },
 }

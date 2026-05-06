@@ -1,0 +1,6 @@
+-- ======== Python ========
+return {
+    servers = {
+        pyright = {},
+    },
+}

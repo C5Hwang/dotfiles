@@ -1,12 +1,11 @@
--- bootstrap lazy.nvim, LazyVim and your plugins
-package.loaded["lazyvim.config.keymaps"] = true
-
+-- ======== Leader ========
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+-- ======== Startup ========
 if vim.g.vscode then
-  require("config.vs_keymaps")
+  require("vscode.keymaps")
 else
-  require("config.lazy")
-  -- options.lua, keymaps.lua, autocmds.lua are auto-loaded by LazyVim
+  require("core")
+  require("lazy_setup")
 end
