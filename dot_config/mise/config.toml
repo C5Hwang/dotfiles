@@ -36,3 +36,4 @@ jq = "latest"
 
 # AI Tools
 "npm:@openai/codex" = "latest"
+"npm:opencode-ai" = "latest"
