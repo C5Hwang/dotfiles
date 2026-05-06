@@ -1,7 +1,7 @@
 [
   // === bindings ===
   {
-    "context": "Editor && VimControl && !menu",
+    "context": "Editor && (vim_mode == normal || vim_mode == visual) && !menu",
     "bindings": {
       // Basic
       "shift-s": "workspace::Save",
@@ -43,13 +43,16 @@
   {
     "context": "Editor || Terminal || Pane",
     "bindings": {
-      "alt-cmd-h": "pane::ActivatePreviousItem",
-      "alt-cmd-l": "pane::ActivateNextItem",
+      // Tab Management
+      "alt-cmd-[": "pane::ActivatePreviousItem",
+      "alt-cmd-]": "pane::ActivateNextItem",
     },
   },
   {
+    // Project Panel Keymaps
     "context": "ProjectPanel && not_editing",
     "bindings": {
+      // Vim-like Control
       "ctrl-j": ["workspace::SendKeystrokes", "5 j"],
       "ctrl-k": ["workspace::SendKeystrokes", "5 k"],
       "a": "project_panel::NewFile",
@@ -60,21 +63,27 @@
     },
   },
   {
-    "context": "Editor",
+    "context": "Editor && !(vim_mode == insert)",
     "bindings": {
-      "alt-shift-f": "editor::Format",
+      // Formatting
+      "space c f": "editor::Format",
+
+      // Add Selection To Agent
       "cmd-shift-enter": "agent::AddSelectionToThread",
     },
   },
   {
     "context": "Workspace",
     "bindings": {
+      // Agent
       "cmd-;": "agent::ToggleFocus",
+
+      // Terminal
       "ctrl-~": "workspace::NewCenterTerminal",
     },
   },
   {
-    "context": "Workspace && !Terminal",
+    "context": "Workspace && !(vim_mode == insert) && !Terminal",
     "bindings": {
       // LazyGit
       "space g g": [
