@@ -1,10 +1,25 @@
+# ┌─────────────────────────────────────────────────────────────┐
+# │ IDENTITY                                                    │
+# └─────────────────────────────────────────────────────────────┘
 [user]
     name = CSHwang
     email = c5hwang@outlook.com
 
+# ┌─────────────────────────────────────────────────────────────┐
+# │ REPOSITORY DEFAULTS                                         │
+# └─────────────────────────────────────────────────────────────┘
 [init]
     defaultBranch = main
 
+[interactive]
+    singleKey = true
+
+[commit]
+    verbose = true
+
+# ┌─────────────────────────────────────────────────────────────┐
+# │ REMOTE SYNCHRONIZATION                                      │
+# └─────────────────────────────────────────────────────────────┘
 [pull]
     rebase = true
     autoStash = true
@@ -18,29 +33,44 @@
     autoSetupRemote = true
     followTags = true
 
-[merge]
-    conflictStyle = zdiff3
-
-[interactive]
-    singleKey = true
-
-[commit]
-    verbose = true
-
-[diff]
-    algorithm = histogram
-    colorMoved = default
-    tool = zed
-
-[difftool "zed"]
-    cmd = zed --diff "$LOCAL" "$REMOTE"
-
+# ┌─────────────────────────────────────────────────────────────┐
+# │ EDITORS AND PAGERS                                          │
+# └─────────────────────────────────────────────────────────────┘
 [core]
     pager = delta
+    editor = nvim
+
+[sequence]
+    editor = nvim
 
 [delta]
     line-numbers = true
     hyperlinks = true
 
+# ┌─────────────────────────────────────────────────────────────┐
+# │ DIFF AND MERGE                                              │
+# └─────────────────────────────────────────────────────────────┘
+[diff]
+    algorithm = histogram
+    colorMoved = default
+    tool = nvimdiff
+
+[difftool]
+    prompt = false
+
+[merge]
+    conflictStyle = zdiff3
+    tool = nvimdiff
+
+[mergetool]
+    prompt = false
+    keepBackup = false
+
+# [mergetool "nvimdiff"]
+    # layout = LOCAL,MERGED,REMOTE
+
+# ┌─────────────────────────────────────────────────────────────┐
+# │ LOCAL OVERRIDES                                             │
+# └─────────────────────────────────────────────────────────────┘
 [include]
     path = ~/.config/git/config.local
