@@ -34,6 +34,13 @@ export ZINIT_HOME="${XDG_DATA_HOME}/zinit/zinit.git"
 source "${ZINIT_HOME}/zinit.zsh"
 
 # ┌─────────────────────────────────────────────────────────────┐
+# │ COMPLETION                                                  │
+# └─────────────────────────────────────────────────────────────┘
+# === Completion Initialization ===
+zicompinit
+zicdreplay -q
+
+# ┌─────────────────────────────────────────────────────────────┐
 # │ PLUGIN LOADING                                              │
 # └─────────────────────────────────────────────────────────────┘
 # === Plugins via zinit ===
@@ -47,10 +54,6 @@ zinit light zsh-users/zsh-syntax-highlighting
 # ┌─────────────────────────────────────────────────────────────┐
 # │ SHELL OPTIONS                                               │
 # └─────────────────────────────────────────────────────────────┘
-# === Completion Initialization ===
-zicompinit
-zicdreplay -q
-
 # === History File & Options ===
 [ ! -d "$XDG_STATE_HOME/zsh" ] && mkdir -p "${XDG_STATE_HOME}/zsh"
 HISTFILE="${XDG_STATE_HOME}/zsh/zsh_history"
@@ -94,6 +97,11 @@ alias df="duf"
 # └─────────────────────────────────────────────────────────────┘
 # === Mise ===
 eval "$(mise activate zsh)"
+
+# === fzf ===
+if command -v fzf >/dev/null 2>&1; then
+    source <(fzf --zsh)
+fi
 
 # === Zoxide ===
 eval "$(zoxide init zsh)"
