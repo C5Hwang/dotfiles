@@ -83,36 +83,42 @@ alt - j : yabai -m window --focus south
 alt - k : yabai -m window --focus north
 alt - l : yabai -m window --focus east
 
-# focus nearby space
-alt - 0x21 : yabai -m space --focus prev || yabai -m space --focus last
-alt - 0x1E : yabai -m space --focus next || yabai -m space --focus first
+# focus nearby space within current display
+# 0x21 = [
+# 0x1E = ]
+alt - 0x21 : index="$(yabai -m query --spaces --display | jq -r 'map(select(."is-native-fullscreen" == false)) as $spaces | ($spaces | map(."has-focus") | index(true)) as $i | if ($spaces | length) == 0 or $i == null then empty elif $i == 0 then $spaces[-1].index else $spaces[$i - 1].index end')" && [ -n "$index" ] && yabai -m space --focus "$index"
+alt - 0x1E : index="$(yabai -m query --spaces --display | jq -r 'map(select(."is-native-fullscreen" == false)) as $spaces | ($spaces | map(."has-focus") | index(true)) as $i | if ($spaces | length) == 0 or $i == null then empty elif $i == (($spaces | length) - 1) then $spaces[0].index else $spaces[$i + 1].index end')" && [ -n "$index" ] && yabai -m space --focus "$index"
 
-# focus specified space
-alt - 1 : yabai -m space --focus 1
-alt - 2 : yabai -m space --focus 2
-alt - 3 : yabai -m space --focus 3
-alt - 4 : yabai -m space --focus 4
-alt - 5 : yabai -m space --focus 5
-alt - 6 : yabai -m space --focus 6
-alt - 7 : yabai -m space --focus 7
-alt - 8 : yabai -m space --focus 8
-alt - 9 : yabai -m space --focus 9
-alt - 0 : yabai -m space --focus 10
+# focus nearby display
+shift + alt - 0x21 : yabai -m display --focus prev || yabai -m display --focus last
+shift + alt - 0x1E : yabai -m display --focus next || yabai -m display --focus first
+
+# focus specified space within current display
+alt - 1 : index="$(yabai -m query --spaces --display | jq -r --argjson n 1 'map(select(."is-native-fullscreen" == false))[($n - 1)].index // empty')" && [ -n "$index" ] && yabai -m space --focus "$index"
+alt - 2 : index="$(yabai -m query --spaces --display | jq -r --argjson n 2 'map(select(."is-native-fullscreen" == false))[($n - 1)].index // empty')" && [ -n "$index" ] && yabai -m space --focus "$index"
+alt - 3 : index="$(yabai -m query --spaces --display | jq -r --argjson n 3 'map(select(."is-native-fullscreen" == false))[($n - 1)].index // empty')" && [ -n "$index" ] && yabai -m space --focus "$index"
+alt - 4 : index="$(yabai -m query --spaces --display | jq -r --argjson n 4 'map(select(."is-native-fullscreen" == false))[($n - 1)].index // empty')" && [ -n "$index" ] && yabai -m space --focus "$index"
+alt - 5 : index="$(yabai -m query --spaces --display | jq -r --argjson n 5 'map(select(."is-native-fullscreen" == false))[($n - 1)].index // empty')" && [ -n "$index" ] && yabai -m space --focus "$index"
+alt - 6 : index="$(yabai -m query --spaces --display | jq -r --argjson n 6 'map(select(."is-native-fullscreen" == false))[($n - 1)].index // empty')" && [ -n "$index" ] && yabai -m space --focus "$index"
+alt - 7 : index="$(yabai -m query --spaces --display | jq -r --argjson n 7 'map(select(."is-native-fullscreen" == false))[($n - 1)].index // empty')" && [ -n "$index" ] && yabai -m space --focus "$index"
+alt - 8 : index="$(yabai -m query --spaces --display | jq -r --argjson n 8 'map(select(."is-native-fullscreen" == false))[($n - 1)].index // empty')" && [ -n "$index" ] && yabai -m space --focus "$index"
+alt - 9 : index="$(yabai -m query --spaces --display | jq -r --argjson n 9 'map(select(."is-native-fullscreen" == false))[($n - 1)].index // empty')" && [ -n "$index" ] && yabai -m space --focus "$index"
+alt - 0 : index="$(yabai -m query --spaces --display | jq -r --argjson n 10 'map(select(."is-native-fullscreen" == false))[($n - 1)].index // empty')" && [ -n "$index" ] && yabai -m space --focus "$index"
 
 # rotate windows clockwise and anticlockwise
 alt - r : yabai -m space --rotate 90
 
-# send window to a space
-shift + alt - 1 : yabai -m window --space 1
-shift + alt - 2 : yabai -m window --space 2
-shift + alt - 3 : yabai -m window --space 3
-shift + alt - 4 : yabai -m window --space 4
-shift + alt - 5 : yabai -m window --space 5
-shift + alt - 6 : yabai -m window --space 6
-shift + alt - 7 : yabai -m window --space 7
-shift + alt - 8 : yabai -m window --space 8
-shift + alt - 9 : yabai -m window --space 9
-shift + alt - 0 : yabai -m window --space 10
+# send window to a space within current display
+shift + alt - 1 : index="$(yabai -m query --spaces --display | jq -r --argjson n 1 'map(select(."is-native-fullscreen" == false))[($n - 1)].index // empty')" && [ -n "$index" ] && yabai -m window --space "$index"
+shift + alt - 2 : index="$(yabai -m query --spaces --display | jq -r --argjson n 2 'map(select(."is-native-fullscreen" == false))[($n - 1)].index // empty')" && [ -n "$index" ] && yabai -m window --space "$index"
+shift + alt - 3 : index="$(yabai -m query --spaces --display | jq -r --argjson n 3 'map(select(."is-native-fullscreen" == false))[($n - 1)].index // empty')" && [ -n "$index" ] && yabai -m window --space "$index"
+shift + alt - 4 : index="$(yabai -m query --spaces --display | jq -r --argjson n 4 'map(select(."is-native-fullscreen" == false))[($n - 1)].index // empty')" && [ -n "$index" ] && yabai -m window --space "$index"
+shift + alt - 5 : index="$(yabai -m query --spaces --display | jq -r --argjson n 5 'map(select(."is-native-fullscreen" == false))[($n - 1)].index // empty')" && [ -n "$index" ] && yabai -m window --space "$index"
+shift + alt - 6 : index="$(yabai -m query --spaces --display | jq -r --argjson n 6 'map(select(."is-native-fullscreen" == false))[($n - 1)].index // empty')" && [ -n "$index" ] && yabai -m window --space "$index"
+shift + alt - 7 : index="$(yabai -m query --spaces --display | jq -r --argjson n 7 'map(select(."is-native-fullscreen" == false))[($n - 1)].index // empty')" && [ -n "$index" ] && yabai -m window --space "$index"
+shift + alt - 8 : index="$(yabai -m query --spaces --display | jq -r --argjson n 8 'map(select(."is-native-fullscreen" == false))[($n - 1)].index // empty')" && [ -n "$index" ] && yabai -m window --space "$index"
+shift + alt - 9 : index="$(yabai -m query --spaces --display | jq -r --argjson n 9 'map(select(."is-native-fullscreen" == false))[($n - 1)].index // empty')" && [ -n "$index" ] && yabai -m window --space "$index"
+shift + alt - 0 : index="$(yabai -m query --spaces --display | jq -r --argjson n 10 'map(select(."is-native-fullscreen" == false))[($n - 1)].index // empty')" && [ -n "$index" ] && yabai -m window --space "$index"
 
 # move space
 shift + alt - a : yabai -m space --move prev
@@ -150,7 +156,7 @@ alt - p : yabai -m window --toggle sticky --toggle pip
 # create a new space and follow focus
 alt - n : yabai -m space --create && \
           index="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
-		  yabai -m space --focus "${index}"
+          yabai -m space --focus "${index}"
 
 # delete focused space
 alt - q : yabai -m space --destroy
