@@ -1,0 +1,80 @@
+{{- $allSyncChoices := list "ghostty" "git" "lazygit" "mise" "neovim" "skhd & yabai" "zed" "zsh" "tmux" -}}
+{{- $sync := get . "sync" | default $allSyncChoices -}}
+{{- if has "tmux" $sync -}}
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+# Script identity used by all log and error messages
+script_name="tmux init"
+
+# Shared logging and error handling
+log() {
+    printf '[%s] %s\n' "$script_name" "$*"
+}
+
+die() {
+    printf '[%s] ERROR: %s\n' "$script_name" "$*" >&2
+    exit 1
+}
+
+on_error() {
+    local exit_code="$?"
+    printf '[%s] ERROR: command failed near line %s with exit code %s\n' \
+        "$script_name" "${1:-unknown}" "$exit_code" >&2
+    exit "$exit_code"
+}
+
+trap 'on_error "$LINENO"' ERR
+
+# Dependency and filesystem helpers
+require_command() {
+    local command_name="$1"
+    command -v "$command_name" >/dev/null 2>&1 || die "required command not found: $command_name"
+}
+
+ensure_dir() {
+    local dir="$1"
+    [[ -n "$dir" ]] || die "empty directory path"
+    [[ -d "$dir" ]] || mkdir -p "$dir"
+}
+
+# Clone TPM if it is missing, then validate its command-line installer
+ensure_tpm() {
+    ensure_dir "$tmux_plugins_dir"
+
+    if [[ -e "$tpm_dir" && ! -d "$tpm_dir/.git" ]]; then
+        die "$tpm_dir exists but is not a git checkout"
+    fi
+
+    if [[ ! -d "$tpm_dir/.git" ]]; then
+        log "cloning TPM into $tpm_dir"
+        git clone --depth=1 https://github.com/tmux-plugins/tpm "$tpm_dir"
+    fi
+
+    [[ -x "$tpm_install_script" ]] || die "$tpm_install_script not found or not executable"
+}
+
+# Install TPM plugins declared in ~/.tmux.conf
+install_tmux_plugins() {
+    [[ -f "$tmux_config_file" ]] || die "$tmux_config_file not found"
+
+    log "installing TPM plugins from $tmux_config_file"
+    "$tpm_install_script"
+}
+
+# Runtime paths
+tmux_config_file="$HOME/.tmux.conf"
+tmux_plugins_dir="$HOME/.tmux/plugins"
+tpm_dir="$tmux_plugins_dir/tpm"
+tpm_install_script="$tpm_dir/bin/install_plugins"
+
+# Required commands for TPM bootstrap
+require_command bash
+require_command git
+require_command mkdir
+require_command tmux
+
+ensure_tpm
+install_tmux_plugins
+log "tmux plugin bootstrap completed"
+{{- end }}
