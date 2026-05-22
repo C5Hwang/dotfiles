@@ -1,5 +1,8 @@
 {{- $allSyncChoices := list "ghostty" "git" "lazygit" "mise" "neovim" "skhd & yabai" "zed" "zsh" "tmux" -}}
 {{- $sync := get . "sync" | default $allSyncChoices -}}
+README.md
+docs
+docs/**
 {{- if not (has "ghostty" $sync) }}
 .config/ghostty
 .config/ghostty/**
