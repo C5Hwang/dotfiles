@@ -10,12 +10,36 @@
     "tmux"
 -}}
 {{- $sync := get . "sync" -}}
-{{- if or (has "--prompt" .chezmoi.args) (not (kindIs "slice" $sync)) -}}
+{{- range $index, $arg := .chezmoi.args -}}
+{{- if eq $arg "--override-data" -}}
+{{- $nextIndex := add1 $index -}}
+{{- if lt $nextIndex (len $.chezmoi.args) -}}
+{{- with index (index $.chezmoi.args $nextIndex | fromJson) "sync" -}}
+{{- $sync = . -}}
+{{- end -}}
+{{- end -}}
+{{- else if hasPrefix "--override-data=" $arg -}}
+{{- with index (trimPrefix "--override-data=" $arg | fromJson) "sync" -}}
+{{- $sync = . -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- if has "--prompt" .chezmoi.args -}}
 {{- $sync = promptMultichoice
     "Select dotfile groups to sync"
     $syncChoices
     $syncChoices
 -}}
+{{- else if not (kindIs "slice" $sync) -}}
+{{- if .chezmoi.flags.noTTY -}}
+{{- $sync = $syncChoices -}}
+{{- else -}}
+{{- $sync = promptMultichoice
+    "Select dotfile groups to sync"
+    $syncChoices
+    $syncChoices
+-}}
+{{- end -}}
 {{- end -}}
 [data]
     sync = {{ $sync | toToml }}
