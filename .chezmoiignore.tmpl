@@ -1,0 +1,42 @@
+{{- $allSyncChoices := list "ghostty" "git" "lazygit" "mise" "neovim" "skhd & yabai" "zed" "zsh" "tmux" -}}
+{{- $sync := get . "sync" | default $allSyncChoices -}}
+{{- if not (has "ghostty" $sync) }}
+.config/ghostty
+.config/ghostty/**
+{{- end }}
+{{- if not (has "git" $sync) }}
+.config/git
+.config/git/**
+{{- end }}
+{{- if not (has "lazygit" $sync) }}
+.config/lazygit
+.config/lazygit/**
+{{- end }}
+{{- if not (has "mise" $sync) }}
+.config/mise
+.config/mise/**
+20-mise-install.sh
+{{- end }}
+{{- if not (has "neovim" $sync) }}
+.config/nvim
+.config/nvim/**
+{{- end }}
+{{- if not (has "skhd & yabai" $sync) }}
+.config/skhd
+.config/skhd/**
+.config/yabai
+.config/yabai/**
+{{- end }}
+{{- if not (has "zed" $sync) }}
+.config/zed
+.config/zed/**
+{{- end }}
+{{- if not (has "zsh" $sync) }}
+.zshenv
+.config/zsh
+.config/zsh/**
+10-zsh-bootstrap.sh
+{{- end }}
+{{- if not (has "tmux" $sync) }}
+.tmux.conf
+{{- end }}

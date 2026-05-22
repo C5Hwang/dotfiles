@@ -1,0 +1,21 @@
+{{- $syncChoices := list
+    "ghostty"
+    "git"
+    "lazygit"
+    "mise"
+    "neovim"
+    "skhd & yabai"
+    "zed"
+    "zsh"
+    "tmux"
+-}}
+{{- $sync := get . "sync" -}}
+{{- if or (has "--prompt" .chezmoi.args) (not (kindIs "slice" $sync)) -}}
+{{- $sync = promptMultichoice
+    "Select dotfile groups to sync"
+    $syncChoices
+    $syncChoices
+-}}
+{{- end -}}
+[data]
+    sync = {{ $sync | toToml }}

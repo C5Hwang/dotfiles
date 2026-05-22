@@ -1,0 +1,122 @@
+{{- $allSyncChoices := list "ghostty" "git" "lazygit" "mise" "neovim" "skhd & yabai" "zed" "zsh" "tmux" -}}
+{{- $sync := get . "sync" | default $allSyncChoices -}}
+{{- if has "zsh" $sync -}}
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+# Script identity used by all log and error messages
+script_name="zsh init"
+
+# Shared logging and error handling
+log() {
+    printf '[%s] %s\n' "$script_name" "$*"
+}
+
+die() {
+    printf '[%s] ERROR: %s\n' "$script_name" "$*" >&2
+    exit 1
+}
+
+on_error() {
+    local exit_code="$?"
+    printf '[%s] ERROR: command failed near line %s with exit code %s\n' \
+        "$script_name" "${1:-unknown}" "$exit_code" >&2
+    exit "$exit_code"
+}
+
+trap 'on_error "$LINENO"' ERR
+
+# Dependency and filesystem helpers
+require_command() {
+    local command_name="$1"
+    command -v "$command_name" >/dev/null 2>&1 || die "required command not found: $command_name"
+}
+
+ensure_dir() {
+    local dir="$1"
+    [[ -n "$dir" ]] || die "empty directory path"
+    [[ -d "$dir" ]] || mkdir -p "$dir"
+}
+
+# Ensure ~/.zshrc loads the chezmoi-managed zsh init file
+prepend_zshrc_init_block() {
+    [[ -n "${HOME:-}" ]] || die "HOME is not set"
+
+    local zshrc="$HOME/.zshrc"
+    local start_marker="# zsh initiation"
+    local end_marker="# zsh initiation END"
+    local zshrc_block=$'# zsh initiation\nsource "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/init.zsh"\n# zsh initiation END'
+    local existing=""
+
+    if [[ -e "$zshrc" && ! -f "$zshrc" ]]; then
+        die "$zshrc exists but is not a regular file"
+    fi
+
+    if [[ -f "$zshrc" ]]; then
+        existing="$(<"$zshrc")"
+        if [[ "$existing" == "$zshrc_block"* ]]; then
+            log "$zshrc already starts with zsh initiation block"
+            return
+        fi
+
+        # Marker collisions likely mean a manually edited or partial block
+        if [[ "$existing" == *"$start_marker"* || "$existing" == *"$end_marker"* ]]; then
+            die "$zshrc already contains zsh initiation markers outside the expected header"
+        fi
+    fi
+
+    if [[ -s "$zshrc" ]]; then
+        printf '%s\n\n%s\n' "$zshrc_block" "$existing" > "$zshrc"
+    else
+        printf '%s\n' "$zshrc_block" > "$zshrc"
+    fi
+    log "prepended zsh initiation block to $zshrc"
+}
+
+# Runtime environment
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_BIN_HOME="${XDG_BIN_HOME:-$HOME/.local/bin}"
+export PATH="$XDG_BIN_HOME:$PATH"
+
+# Required commands for the bootstrap steps below
+require_command curl
+require_command git
+require_command mkdir
+require_command sh
+
+ensure_dir "$XDG_BIN_HOME"
+ensure_dir "$XDG_CONFIG_HOME"
+
+# Starship prompt installation
+if ! command -v starship >/dev/null 2>&1; then
+    log "starship not found, installing to $XDG_BIN_HOME"
+    curl -fsSL https://starship.rs/install.sh | sh -s -- -y -b "$XDG_BIN_HOME"
+fi
+command -v starship >/dev/null 2>&1 || die "starship install finished but starship is not on PATH"
+
+# Default Starship preset generation
+if [[ ! -f "${XDG_CONFIG_HOME}/starship.toml" ]]; then
+    log "creating ${XDG_CONFIG_HOME}/starship.toml"
+    starship preset nerd-font-symbols -o "${XDG_CONFIG_HOME}/starship.toml"
+fi
+
+# Zinit plugin manager installation.
+export ZINIT_HOME="${XDG_DATA_HOME}/zinit/zinit.git"
+ensure_dir "${ZINIT_HOME%/*}"
+
+if [[ -e "$ZINIT_HOME" && ! -d "$ZINIT_HOME/.git" ]]; then
+    die "$ZINIT_HOME exists but is not a git checkout"
+fi
+
+if [[ ! -d "$ZINIT_HOME/.git" ]]; then
+    log "cloning zinit into $ZINIT_HOME"
+    git clone --depth=1 https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
+
+[[ -f "$ZINIT_HOME/zinit.zsh" ]] || die "zinit.zsh was not found under $ZINIT_HOME"
+
+# Shell entrypoint wiring
+prepend_zshrc_init_block
+log "zsh bootstrap completed"
+{{- end }}

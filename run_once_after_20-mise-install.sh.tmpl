@@ -1,0 +1,119 @@
+{{- $allSyncChoices := list "ghostty" "git" "lazygit" "mise" "neovim" "skhd & yabai" "zed" "zsh" "tmux" -}}
+{{- $sync := get . "sync" | default $allSyncChoices -}}
+{{- if has "mise" $sync -}}
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+# Script identity used by all log and error messages
+script_name="mise init"
+
+# Shared logging and error handling
+log() {
+    printf '[%s] %s\n' "$script_name" "$*"
+}
+
+die() {
+    printf '[%s] ERROR: %s\n' "$script_name" "$*" >&2
+    exit 1
+}
+
+on_error() {
+    local exit_code="$?"
+    printf '[%s] ERROR: command failed near line %s with exit code %s\n' \
+        "$script_name" "${1:-unknown}" "$exit_code" >&2
+    exit "$exit_code"
+}
+
+trap 'on_error "$LINENO"' ERR
+
+# Dependency and filesystem helpers
+require_command() {
+    local command_name="$1"
+    command -v "$command_name" >/dev/null 2>&1 || die "required command not found: $command_name"
+}
+
+ensure_dir() {
+    local dir="$1"
+    [[ -n "$dir" ]] || die "empty directory path"
+    [[ -d "$dir" ]] || mkdir -p "$dir"
+}
+
+# Locate mise from PATH or the locations used by the official installer
+find_mise() {
+    local found
+    found="$(command -v mise 2>/dev/null || true)"
+    if [[ -n "$found" ]]; then
+        printf '%s\n' "$found"
+        return 0
+    fi
+
+    if [[ -x "$HOME/.local/bin/mise" ]]; then
+        printf '%s\n' "$HOME/.local/bin/mise"
+        return 0
+    fi
+
+    if [[ -n "${XDG_BIN_HOME:-}" && -x "$XDG_BIN_HOME/mise" ]]; then
+        printf '%s\n' "$XDG_BIN_HOME/mise"
+        return 0
+    fi
+
+    return 1
+}
+
+# Install mise with the official generic installer
+install_mise() {
+    require_command curl
+    require_command sh
+
+    log "mise not found, installing with official installer: curl https://mise.run | sh"
+    curl -fsSL https://mise.run | sh
+}
+
+# Verify every tool declared by the current config has been installed
+verify_mise_install() {
+    local missing_tools
+
+    missing_tools="$("$mise_bin" ls --missing --current -C "$mise_config_dir")"
+    if [[ -n "$missing_tools" ]]; then
+        printf '[%s] Missing mise tools after install:\n%s\n' "$script_name" "$missing_tools" >&2
+        die "mise install completed but some configured tools are still missing"
+    fi
+}
+
+# Runtime environment
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_BIN_HOME="${XDG_BIN_HOME:-$HOME/.local/bin}"
+export PATH="$XDG_BIN_HOME:$HOME/.local/bin:$PATH"
+
+# Required commands for bootstrap work
+require_command mkdir
+
+# Ensure mise is available before reading or installing configured tools
+if ! mise_bin="$(find_mise)"; then
+    install_mise
+    export PATH="$HOME/.local/bin:$PATH"
+    mise_bin="$(find_mise)" || die "mise install finished but mise was not found"
+fi
+
+log "using mise at $mise_bin"
+
+# Global mise configuration managed by chezmoi
+mise_config_dir="$HOME/.config/mise"
+mise_config_file="${mise_config_dir}/config.toml"
+
+[[ -d "$mise_config_dir" ]] || die "$mise_config_dir not found"
+[[ -f "$mise_config_file" ]] || die "$mise_config_file not found"
+
+cd "$mise_config_dir"
+
+# Trust and install all tools declared in the managed global config
+log "trusting $mise_config_file"
+"$mise_bin" trust --yes "$mise_config_file"
+
+log "installing tools from $mise_config_file"
+"$mise_bin" install --yes
+
+log "verifying mise tool installation"
+verify_mise_install
+log "mise bootstrap completed"
+{{- end }}
