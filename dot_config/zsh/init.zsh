@@ -1,18 +1,6 @@
 # ┌─────────────────────────────────────────────────────────────┐
 # │ STARSHIP PROMPT SETUP                                       │
 # └─────────────────────────────────────────────────────────────┘
-# === StarShip Bootstrap ===
-if ! command -v starship >/dev/null 2>&1; then
-    echo "[zsh init] starship not found, installing to $XDG_BIN_HOME..."
-    [ ! -d "$XDG_BIN_HOME" ] && mkdir -p "${XDG_BIN_HOME}"
-    curl -sS https://starship.rs/install.sh | sh -s -- -y -b "$XDG_BIN_HOME"
-fi
-
-# === Generate preset ===
-if [[ ! -f "${XDG_CONFIG_HOME}/starship.toml" ]]; then
-    starship preset nerd-font-symbols -o "${XDG_CONFIG_HOME}/starship.toml"
-fi
-
 # === Initialization ===
 eval "$(starship init zsh)"
 
@@ -25,10 +13,8 @@ declare -A ZINIT
 ZINIT[ZCOMPDUMP_PATH]="${XDG_CACHE_HOME}/zsh/.zcompdump-${HOST}-${ZSH_VERSION}"
 ZINIT[COMPINIT_OPTS]="-C"          # Skip timestamp check for faster startup
 
-# === Zinit Bootstrap ===
+# === Zinit Home ===
 export ZINIT_HOME="${XDG_DATA_HOME}/zinit/zinit.git"
-[ ! -d "$ZINIT_HOME" ] && mkdir -p "$(dirname "$ZINIT_HOME")"
-[ ! -d "$ZINIT_HOME/.git" ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 
 # === Initialization ===
 source "${ZINIT_HOME}/zinit.zsh"
