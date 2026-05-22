@@ -2,7 +2,7 @@
 # Core Programming Languages & Runtimes
 go = "latest"
 uv = "latest"
-node = "latest"
+node = "lts"
 rust = "stable"
 python = "3.14"
 
