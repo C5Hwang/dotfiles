@@ -80,6 +80,26 @@ verify_mise_install() {
     fi
 }
 
+# Install and activate node first so npm-backed tools can call npm reliably
+prepare_node_runtime() {
+    if ! "$mise_bin" ls --current node -C "$mise_config_dir" >/dev/null 2>&1; then
+        log "node is not declared in $mise_config_file; skipping node bootstrap"
+        return
+    fi
+
+    log "installing node before npm-backed mise tools"
+    "$mise_bin" install --yes -C "$mise_config_dir" node
+
+    log "refreshing mise shims after node installation"
+    "$mise_bin" reshim --yes -C "$mise_config_dir"
+
+    log "activating mise environment for npm-backed tools"
+    eval "$("$mise_bin" activate bash -C "$mise_config_dir")"
+
+    command -v node >/dev/null 2>&1 || die "node was installed but is not on PATH"
+    command -v npm >/dev/null 2>&1 || die "npm was installed with node but is not on PATH"
+}
+
 # Runtime environment
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export XDG_BIN_HOME="${XDG_BIN_HOME:-$HOME/.local/bin}"
@@ -109,6 +129,8 @@ cd "$mise_config_dir"
 # Trust and install all tools declared in the managed global config
 log "trusting $mise_config_file"
 "$mise_bin" trust --yes "$mise_config_file"
+
+prepare_node_runtime
 
 log "installing tools from $mise_config_file"
 "$mise_bin" install --yes
