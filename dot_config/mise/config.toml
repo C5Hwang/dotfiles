@@ -22,10 +22,10 @@ eza = "latest"
 bat = "latest"
 yazi = "latest"
 zoxide = "latest"
-bottom = "latest"
 ripgrep = "latest"
 dust = "latest"
 duf = "latest"
+"conda:btop" = "latest"
 
 # Git
 delta = "latest"
@@ -37,3 +37,6 @@ jq = "latest"
 # AI Tools
 "npm:@openai/codex" = "latest"
 "npm:opencode-ai" = "latest"
+
+[settings]
+experimental = true

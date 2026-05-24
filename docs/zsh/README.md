@@ -25,7 +25,7 @@ Bootstrap script: `run_once_after_10-zsh-bootstrap.sh.tmpl`, rendered to `10-zsh
 | `la`        | `eza --icons -la`       | Long directory listing including hidden files. |
 | `du`        | `dust`                  | More readable disk usage.                      |
 | `df`        | `duf`                   | More readable filesystem usage.                |
-| `top`       | `btm`                   | Modern terminal system monitor.                |
+| `top`       | `btop`                  | Modern terminal system monitor.                |
 | `cd`        | `z` from zoxide         | Frecency-based directory jumping.              |
 | `zi`        | zoxide interactive mode | Interactive directory jumping.                 |
 

@@ -78,7 +78,7 @@ alias la="eza --icons -la"
 alias du="dust"
 alias df="duf"
 
-alias top="btm"
+alias top="btop"
 
 # ┌─────────────────────────────────────────────────────────────┐
 # │ EXTERNAL TOOL INTEGRATIONS                                  │
