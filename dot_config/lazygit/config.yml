@@ -25,9 +25,10 @@ git:
 
 customCommands:
   - key: "f"
-    command: "git difftool -y {{.SelectedLocalCommit.Sha}} -- {{.SelectedCommitFile.Name}}"
+    command: "git difftool -y {{ .SelectedCommit.Hash }} -- {{ .SelectedCommitFile.Name | quote }}"
     context: "commitFiles"
     description: "Compare selected commit file with working copy"
+    output: terminal
 
 os:
   editPreset: zed
