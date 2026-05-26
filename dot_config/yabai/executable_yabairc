@@ -50,7 +50,6 @@ yabai -m rule --add app="^(System Settings|系统设置)$" manage=off
 yabai -m rule --add app="^(Finder|访达)$" manage=off
 yabai -m rule --add app="^App Store$" manage=off
 
-yabai -m rule --add app="^BetterTouchTool$" manage=off
 yabai -m rule --add app="^Pearcleaner$" manage=off
 yabai -m rule --add app="^OrbStack$" manage=off
 yabai -m rule --add app="^ForkLift$" manage=off

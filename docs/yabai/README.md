@@ -9,7 +9,9 @@ Managed targets:
 
 - Uses yabai BSP tiling with small gaps and padding.
 - Loads the yabai scripting addition and reloads it when Dock restarts.
-- Leaves common system, utility, chat, and menu-bar style apps unmanaged.
+- Leaves selected system, utility, chat, and menu-bar style apps unmanaged:
+  Activity Monitor, System Settings, Finder, App Store, Pearcleaner, OrbStack,
+  ForkLift, MacZip, Ice, QQ, WeChat, Telegram, Raycast, and Surge.
 - Adds Ghostty window create/destroy signals to work around macOS tiling issues with Ghostty tabs.
 - Uses skhd as the keybinding layer; skhd commands call `yabai -m`.
 
