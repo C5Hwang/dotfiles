@@ -38,15 +38,21 @@
       "s k": "pane::SplitUp",
       "s l": "pane::SplitRight",
       "space o": "pane::JoinAll",
-    },
+
+      // Formatting
+      "space c f": "editor::Format",
+
+      // Add Selection To Agent
+      "cmd-shift-enter": "agent::AddSelectionToThread"
+    }
   },
   {
     "context": "Editor || Terminal || Pane",
     "bindings": {
       // Tab Management
       "alt-cmd-[": "pane::ActivatePreviousItem",
-      "alt-cmd-]": "pane::ActivateNextItem",
-    },
+      "alt-cmd-]": "pane::ActivateNextItem"
+    }
   },
   {
     // Project Panel Keymaps
@@ -59,18 +65,8 @@
       "A": "project_panel::NewDirectory",
       "r": "project_panel::Rename",
       "d": "project_panel::Delete",
-      "shift-t": "workspace::OpenInTerminal",
-    },
-  },
-  {
-    "context": "Editor && !(vim_mode == insert)",
-    "bindings": {
-      // Formatting
-      "space c f": "editor::Format",
-
-      // Add Selection To Agent
-      "cmd-shift-enter": "agent::AddSelectionToThread",
-    },
+      "shift-t": "workspace::OpenInTerminal"
+    }
   },
   {
     "context": "Workspace",
@@ -79,19 +75,19 @@
       "cmd-;": "agent::ToggleFocus",
 
       // Terminal
-      "ctrl-~": "workspace::NewCenterTerminal",
-    },
+      "ctrl-~": "workspace::NewCenterTerminal"
+    }
   },
   {
-    "context": "Workspace && !(vim_mode == insert) && !Terminal",
+    "context": "((!Editor && !Terminal) || VimControl || EmptyPane || SharedScreen) && !BufferSearchBar && !ProjectSearchBar && !menu",
     "bindings": {
       // LazyGit
       "space g g": [
         "task::Spawn",
         {
           "task_name": "start lazygit",
-          "reveal_target": "center",
-        },
+          "reveal_target": "center"
+        }
       ],
 
       // Claude Code
@@ -99,8 +95,8 @@
         "task::Spawn",
         {
           "task_name": "Agent: Claude Code",
-          "reveal_target": "center",
-        },
+          "reveal_target": "center"
+        }
       ],
 
       // Codex
@@ -108,8 +104,8 @@
         "task::Spawn",
         {
           "task_name": "Agent: Codex",
-          "reveal_target": "center",
-        },
+          "reveal_target": "center"
+        }
       ],
 
       // OpenCode
@@ -117,40 +113,40 @@
         "task::Spawn",
         {
           "task_name": "Agent: OpenCode",
-          "reveal_target": "center",
-        },
-      ],
-    },
+          "reveal_target": "center"
+        }
+      ]
+    }
   },
 
   // === unbind ===
   {
     "unbind": {
-      "alt-cmd-h": "zed::HideOthers",
-    },
+      "alt-cmd-h": "zed::HideOthers"
+    }
   },
   {
     "context": "Workspace",
     "unbind": {
-      "cmd-?": "agent::ToggleFocus",
-    },
+      "cmd-?": "agent::ToggleFocus"
+    }
   },
   {
     "context": "Editor",
     "unbind": {
-      "cmd-;": "editor::ToggleLineNumbers",
-    },
+      "cmd-;": "editor::ToggleLineNumbers"
+    }
   },
   {
     "context": "Editor && mode == full",
     "unbind": {
-      "cmd-shift-enter": "editor::NewlineAbove",
-    },
+      "cmd-shift-enter": "editor::NewlineAbove"
+    }
   },
   {
     "context": "Workspace",
     "unbind": {
-      "ctrl-~": "workspace::NewTerminal",
-    },
-  },
+      "ctrl-~": "workspace::NewTerminal"
+    }
+  }
 ]
