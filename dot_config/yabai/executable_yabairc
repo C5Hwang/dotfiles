@@ -46,7 +46,7 @@ yabai -m config                                 \
 
 # disable apps
 yabai -m rule --add app="^(Activity Monitor|活动监视器)$" manage=off
-yabai -m rule --add app="^(System Settings|系统设置)$" manage=off
+yabai -m rule --add app="(Settings|设置)$" manage=off
 yabai -m rule --add app="^(Finder|访达)$" manage=off
 yabai -m rule --add app="^App Store$" manage=off
 
@@ -54,7 +54,6 @@ yabai -m rule --add app="^Pearcleaner$" manage=off
 yabai -m rule --add app="^OrbStack$" manage=off
 yabai -m rule --add app="^ForkLift$" manage=off
 yabai -m rule --add app="^MacZip$" manage=off
-yabai -m rule --add app="^Ice$" manage=off
 
 yabai -m rule --add app="^QQ$" manage=off
 yabai -m rule --add app="^(微信|WeChat)$" manage=off
