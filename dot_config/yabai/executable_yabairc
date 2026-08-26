@@ -51,8 +51,8 @@ yabai -m rule --add app="^(Finder|访达)$" manage=off
 yabai -m rule --add app="^App Store$" manage=off
 
 yabai -m rule --add app="^Pearcleaner$" manage=off
+yabai -m rule --add app="^Cyberduck.*" manage=off
 yabai -m rule --add app="^OrbStack$" manage=off
-yabai -m rule --add app="^ForkLift$" manage=off
 yabai -m rule --add app="^MacZip$" manage=off
 
 yabai -m rule --add app="^QQ$" manage=off
