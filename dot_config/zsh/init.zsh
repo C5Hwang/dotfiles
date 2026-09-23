@@ -71,9 +71,9 @@ alias v="nvim"
 alias vim="nvim"
 
 # === Modern Tool Aliases ===
-alias ls="eza --icons"
-alias ll="eza --icons -lh"
-alias la="eza --icons -la"
+alias ls="eza --icons=auto"
+alias ll="eza --icons=auto -lh"
+alias la="eza --icons=auto -la"
 
 alias du="dust"
 alias df="duf"
