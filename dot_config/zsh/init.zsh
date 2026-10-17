@@ -40,6 +40,10 @@ zinit light zsh-users/zsh-syntax-highlighting
 # ┌─────────────────────────────────────────────────────────────┐
 # │ SHELL OPTIONS                                               │
 # └─────────────────────────────────────────────────────────────┘
+# === Default Editor ===
+export EDITOR="nvim"
+export VISUAL="nvim"
+
 # === History File & Options ===
 [ ! -d "$XDG_STATE_HOME/zsh" ] && mkdir -p "${XDG_STATE_HOME}/zsh"
 HISTFILE="${XDG_STATE_HOME}/zsh/zsh_history"
