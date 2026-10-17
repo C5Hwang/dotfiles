@@ -26,6 +26,9 @@ source "${ZINIT_HOME}/zinit.zsh"
 zicompinit
 zicdreplay -q
 
+# === Emacs Key Bindings ===
+bindkey -e
+
 # ┌─────────────────────────────────────────────────────────────┐
 # │ PLUGIN LOADING                                              │
 # └─────────────────────────────────────────────────────────────┘
