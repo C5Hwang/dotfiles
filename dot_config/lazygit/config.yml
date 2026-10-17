@@ -31,7 +31,7 @@ customCommands:
     output: terminal
 
 os:
-  editPreset: zed
+  editPreset: nvim
 
 disableStartupPopups: true
 confirmOnQuit: true
