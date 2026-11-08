@@ -1,4 +1,4 @@
-{{- $allSyncChoices := list "ghostty" "git" "lazygit" "mise" "neovim" "zed" "zsh" "tmux" -}}
+{{- $allSyncChoices := list "ghostty" "git" "lazygit" "mise" "neovim" "omniwm" "zed" "zsh" "tmux" -}}
 {{- $sync := get . "sync" | default $allSyncChoices -}}
 {{- if has "mise" $sync -}}
 #!/usr/bin/env bash
