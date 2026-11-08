@@ -1,4 +1,4 @@
-{{- $allSyncChoices := list "ghostty" "git" "lazygit" "mise" "neovim" "skhd & yabai" "zed" "zsh" "tmux" -}}
+{{- $allSyncChoices := list "ghostty" "git" "lazygit" "mise" "neovim" "zed" "zsh" "tmux" -}}
 {{- $sync := get . "sync" | default $allSyncChoices -}}
 README.md
 docs
@@ -23,12 +23,6 @@ docs/**
 {{- if not (has "neovim" $sync) }}
 .config/nvim
 .config/nvim/**
-{{- end }}
-{{- if not (has "skhd & yabai" $sync) }}
-.config/skhd
-.config/skhd/**
-.config/yabai
-.config/yabai/**
 {{- end }}
 {{- if not (has "zed" $sync) }}
 .config/zed
