@@ -18,6 +18,7 @@ git
 lazygit
 mise
 neovim
+omniwm
 zed
 zsh
 tmux
@@ -27,7 +28,7 @@ For non-interactive setup, pass the `sync` data explicitly:
 
 ```sh
 chezmoi init --apply --no-tty \
-  --override-data '{"sync":["ghostty","git","lazygit","mise","neovim","zed","zsh","tmux"]}' \
+  --override-data '{"sync":["ghostty","git","lazygit","mise","neovim","omniwm","zed","zsh","tmux"]}' \
   https://github.com/C5Hwang/dotfiles
 ```
 
@@ -46,6 +47,7 @@ chezmoi init --apply --no-tty \
 - [Lazygit](docs/lazygit/README.md)
 - [mise](docs/mise/README.md)
 - [Neovim](docs/neovim/README.md)
+- [OmniWM](docs/omniwm/README.md)
 - [tmux](docs/tmux/README.md)
 - [Zed](docs/zed/README.md)
 - [Zsh](docs/zsh/README.md)
