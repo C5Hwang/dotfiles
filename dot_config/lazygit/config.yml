@@ -3,12 +3,11 @@ gui:
   showFileTree: true
   sidePanelWidth: 0.25
   mainPanelSplitMode: flexible
-  wrapLinesInStagingView: true
-  useHunkModeInStagingView: true
+  wrapLinesInDiffView: true
+  useHunkModeInDiffView: true
   showCommandLog: false
   showBottomLine: true
   showPanelJumps: true
-
 git:
   autoFetch: true
   autoRefresh: true
@@ -16,22 +15,17 @@ git:
   fetchAll: true
   autoStageResolvedConflicts: true
   diffContextSize: 3
-  pagers:
-    - pager: >-
-        delta --paging=never --side-by-side --line-numbers
-        --hyperlinks
-        --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+  diffRenderers:
+    - command: >-
+        delta --paging=never --side-by-side --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
       colorArg: always
-
 customCommands:
   - key: "f"
     command: "git difftool -y {{ .SelectedCommit.Hash }} -- {{ .SelectedCommitFile.Name | quote }}"
     context: "commitFiles"
     description: "Compare selected commit file with working copy"
     output: terminal
-
 os:
   editPreset: nvim
-
 disableStartupPopups: true
 confirmOnQuit: true
