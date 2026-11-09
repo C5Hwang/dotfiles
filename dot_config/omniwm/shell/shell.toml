@@ -13,7 +13,7 @@ enabled = false
 
 [profiles.default.widgets.workspaces]
 compact = false
-indicator = "pills"
+indicator = "dots"
 occupiedBackground = false
 
 [profiles.default.widgets.world-clock]

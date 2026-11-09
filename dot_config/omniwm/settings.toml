@@ -1226,7 +1226,6 @@ binding = "Unassigned"
 id = "toggleShellWidget.workspaces"
 
 [[workspaces]]
-displayName = "•"
 id = "657E05DB-8C77-4FCF-9AD1-0EB2E432200B"
 layoutType = "niri"
 name = "1"
@@ -1235,7 +1234,6 @@ name = "1"
 type = "main"
 
 [[workspaces]]
-displayName = "•"
 id = "937F3811-877C-48CC-85A1-D95F5CF4933C"
 layoutType = "niri"
 name = "2"
@@ -1244,7 +1242,6 @@ name = "2"
 type = "secondary"
 
 [[workspaces]]
-displayName = "•"
 id = "4603F529-A52D-48E9-94E2-AD6B72FACAAD"
 layoutType = "niri"
 name = "3"
