@@ -210,6 +210,27 @@ gridRow = 0
 monitorDisplayUUID = "5AF3D6A2-F7F4-4B6C-A722-A28B9E81FCF3"
 monitorName = "office-right"
 
+[[routing.arrangements]]
+id = "B8A5BACA-6818-4D87-B98F-ED3138D20940"
+
+[[routing.arrangements.monitors]]
+gridColumn = 0
+gridRow = 0
+monitorDisplayUUID = "4AC5D3E5-F4C3-4487-9C7A-DC095A93B590"
+monitorName = "remote-left"
+
+[[routing.arrangements.monitors]]
+gridColumn = 1
+gridRow = 0
+monitorDisplayUUID = "9D368928-694B-4572-92FA-B5ACF025EB0D"
+monitorName = "remote-center"
+
+[[routing.arrangements.monitors]]
+gridColumn = 2
+gridRow = 0
+monitorDisplayUUID = "D6F5416F-E36E-4190-8F7C-17C098CCC59F"
+monitorName = "remote-right"
+
 [scratchpads]
 
 [scratchpads.labels]
